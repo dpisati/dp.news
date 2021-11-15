@@ -4,22 +4,27 @@ import { FiX } from 'react-icons/fi'
 
 import styles from './styles.module.scss';
 
-export default function SignInButton() {
-    const isUserLoggedIn = true;
+// @ts-ignore: Unreachable code error
+import { signIn, signOut, useSession } from 'next-auth/client'
 
-    return isUserLoggedIn ? (
+export default function SignInButton() {
+    const [session] = useSession();
+
+    return session ? (
         <button 
             type="button"
             className={styles.signInButton}
+            onClick={() => signOut()}
         >
             <FaGithub color="#04d361" />
-            Daniel Pisati
+            {session.user.name}
             <FiX color="#737380" className={styles.closeIcon}/>
         </button>
     ) : (
         <button 
         type="button"
         className={styles.signInButton}
+        onClick={() => signIn('github')}
     >
         <FaGithub color="#eba417" />
         Sign In with GitHub
