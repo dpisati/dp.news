@@ -4,6 +4,7 @@ import { getStripeJs } from '../../services/stripe-js';
 
 import styles from './styles.module.scss';
 import { api } from '../../services/api';
+import { useRouter } from 'next/dist/client/router';
 
 interface SubscribeButtonProps {
     priceId: string;
@@ -11,6 +12,7 @@ interface SubscribeButtonProps {
 
 export default function SubscribeButton({ priceId }: SubscribeButtonProps) {
     const [session] = useSession();
+    const router = useRouter()
 
     async function handleSubscribe(){
 
@@ -20,11 +22,13 @@ export default function SubscribeButton({ priceId }: SubscribeButtonProps) {
         }
 
 
+        if(session.activeSubscription) {
+            router.push('/posts')
+            return;
+        }
 
-        // create checkout session
-        const response = await api.post('/subscribe');
-        
         try {
+            const response = await api.post('/subscribe');
             const { sessionid } = response.data;
             const stripe = await getStripeJs();
 
