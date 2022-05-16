@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import SignInButton from '../SignInButton';
 import Link from 'next/Link';
 
@@ -7,23 +7,20 @@ import { useRouter } from 'next/dist/client/router';
 import { ActiveLink } from '../ActiveLink';
 
 export function Header() {
-
-    
-
     return (
         <header className={styles.headerContainer}>
             <div className={styles.headerContent}>
                 <img src="/images/logo.svg" alt="dp.news" />
                 <nav>
                     <ActiveLink activeClassName={styles.active} href="/">
-                        <a>Home</a>                    
+                        <a>Home</a>
                     </ActiveLink>
-                    <ActiveLink activeClassName={styles.active} href="/posts" prefetch>
+                    <ActiveLink activeClassName={styles.active} href="/posts">
                         <a>Posts</a>
                     </ActiveLink>
                 </nav>
                 <SignInButton />
-            </div>            
+            </div>
         </header>
-    )
+    );
 }
