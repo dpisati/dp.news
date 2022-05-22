@@ -18,6 +18,12 @@ interface PostPreviewProps {
     };
 }
 
+type ResponseType = {
+    title: string;
+    content: string[];
+    last_publication_date: string;
+};
+
 export default function PostPreview({ post }: PostPreviewProps) {
     const [session] = useSession();
     const router = useRouter();
@@ -66,7 +72,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     const { slug } = params;
     const prismic = getPrismisClient();
-    const response = await prismic.getByUID('post', String(slug), {});
+    const response = await prismic.getByUID<ResponseType>(
+        'post',
+        String(slug),
+        {}
+    );
 
     const post = {
         slug,
